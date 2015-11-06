@@ -1,0 +1,68 @@
+<html>
+<head>
+    <title>Private Nymph</title>
+</head>
+
+<body>
+
+<div id = "main">
+    <h1>Welcome</h1>
+    <form id = "entry_boxes">
+        <input id="name" type="text" placeholder="Name" ></input>
+        <input id="password" type="text" placeholder="Password"> </input>
+        <input id="price" type="text" placeholder="Price"></input>
+    </form>
+    <div id = "submit_buttons">
+        <button id= "submit" onclick="toParse()"> submit </button>
+        <button id= "view" onclick= "authenticate()"> view </button>
+        <button id= "transfer" onclick="transfer()">tranfser</button>
+    </div>
+</div>
+
+<style>
+    body{
+        background-image: url("n1.jpg");
+    }
+
+    h1{
+        color: white;
+
+    }
+    #main{
+        margin: auto;
+        text-align: center;
+    }
+
+</style>
+
+<!-- check ownership -->
+<script>
+var socket = io.connect('http://192.168.1.142:8000');
+
+function toParse(){
+    console.log("Sending data to Parse");
+    var name = document.getElementById('name').value;
+    var password = document.getElementById('password').value;
+    var price = document.getElementById('price').value;
+    socket.emit('sendToParse', { name: name, password: password, price: price, });
+    document.getElementsById('firstName').placeholder='new text for email';
+
+}
+
+function authenticate(){
+    //does the name and password match
+     appParse.find('name', {objectId: '--idhere--'}, function (err, response) {
+     var name = response;
+     if
+    });
+}
+
+function tranfer(){
+     //actions: delete previous owner
+}
+
+</script>
+<script src="http://192.168.1.142:8000/socket.io/socket.io.js"></script>
+
+</body>
+</html>
