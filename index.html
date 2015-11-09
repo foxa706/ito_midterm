@@ -1,21 +1,23 @@
 <html>
 <head>
     <title>Private Nymph</title>
+    <script src="http://192.168.1.142:8000/socket.io/socket.io.js"></script>
 </head>
 
 <body>
 
 <div id = "main">
-    <h1>Welcome</h1>
+    <h1 id="welcome"></h1>
     <form id = "entry_boxes">
         <input id="name" type="text" placeholder="Name" ></input>
         <input id="password" type="text" placeholder="Password"> </input>
-        <input id="price" type="text" placeholder="Price"></input>
+        <!-- <input id="price" type="text" placeholder="Price"></input> -->
     </form>
     <div id = "submit_buttons">
-        <button id= "submit" onclick="toParse()"> submit </button>
-        <button id= "view" onclick= "authenticate()"> view </button>
-        <button id= "transfer" onclick="transfer()">tranfser</button>
+        <button id= "submit" onclick="openSer()"> submit </button>
+
+        <button id= "view" onclick= "open()"> view </button>
+<!--         <button id= "transfer" onclick="transfer()">tranfser</button> -->
     </div>
 </div>
 
@@ -29,6 +31,30 @@
 
     }
     #main{
+        height: 100vh;
+        width: 100vw;
+        padding-top: 40vh;
+    }
+    #welcome{
+        height: 20vh;
+        width: 50vw;
+        padding: 10px;
+        margin: auto;
+        text-align: center;
+        font-size: 13vh;
+    }
+    #entry_boxes{
+        height: 7vh;
+        width: 50vw;
+        padding: 10px;
+        align:center;
+        margin: auto;
+        text-align: center;
+    }
+    #submit_buttons{
+        height: 7vh;
+        width: 50vw;
+        padding: 10px;
         margin: auto;
         text-align: center;
     }
@@ -38,31 +64,40 @@
 <!-- check ownership -->
 <script>
 var socket = io.connect('http://192.168.1.142:8000');
+var welcome = document.getElementById('welcome');
 
 function toParse(){
     console.log("Sending data to Parse");
     var name = document.getElementById('name').value;
     var password = document.getElementById('password').value;
-    var price = document.getElementById('price').value;
-    socket.emit('sendToParse', { name: name, password: password, price: price, });
-    document.getElementsById('firstName').placeholder='new text for email';
+    // var price = document.getElementById('price').value;
+    socket.emit('sendToParse', { name: name, password: password });
+    document.getElementsByName('name').placeholder='name';
+    document.getElementsByName('password').placeholder='password';
+    socket.emit('getFromParse', { });
+
+    socket.on('toScreen', function (data) {
+        console.log("recieved: " + data.name);
+        welcome.innerText= "Welcome " + data.name;
+    });
 
 }
 
-function authenticate(){
-    //does the name and password match
-     appParse.find('name', {objectId: '--idhere--'}, function (err, response) {
-     var name = response;
-     if
-    });
+function displayName(){
+
+}
+
+function openSer(){
+    socket.emit('open', { open: "O" });
 }
 
 function tranfer(){
-     //actions: delete previous owner
+     //actions: add price column, send price and new user to parse, set auth to new user
 }
 
+
 </script>
-<script src="http://192.168.1.142:8000/socket.io/socket.io.js"></script>
+
 
 </body>
 </html>
